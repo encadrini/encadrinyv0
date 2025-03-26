@@ -20,8 +20,8 @@ COPY . .
 
 # Generate Prisma client
 COPY src/prisma/schema.prisma ./prisma/
-RUN npx prisma generate 
-RUN npx prisma migrate deploy 
+RUN npx prisma generate --schema=./prisma/schema.prisma 
+
 
 # Expose the port the app runs on
 EXPOSE 3100
@@ -35,4 +35,4 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3100/api/health || exit 1
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]
