@@ -1,8 +1,14 @@
-import express from "express"
-import { register } from "../controller/user.controller.js";
+// src/routes/user.route.js
 
-const router = express.Router(); 
+import express from "express";
+import { register, login } from "../controller/user.controller.js";
 
-router.post("/signup",register) // post request 
+const router = express.Router();
 
-export default router 
+// Route d'inscription utilisateur
+router.post("/register", register);
+
+// Route de connexion utilisateur
+router.post("/login", login);
+
+export default router;

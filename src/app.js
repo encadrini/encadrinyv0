@@ -1,12 +1,14 @@
-import express from "express"
-import cors from "cors"
-import router from "./routes/user.route.js"
+import express from "express";
+import cors from "cors";
+import router from "./routes/user.route.js";
 
-const app = express()
+const app = express();
 
 //middlewares
-app.use(cors())
-app.use(express.json())
-app.use("/user",router)
+app.use(cors());
+app.use(express.json());
 
-export default app
+//routes
+app.use("/user", router);
+
+export default app;
