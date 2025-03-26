@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules
+npm-debug.log
+
+# Environment variables
+.env
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Build outputs
+dist
+build
+
+# Logs
+logs
+*.log
+
+# Testing
+coverage
