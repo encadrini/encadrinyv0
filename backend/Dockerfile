@@ -19,8 +19,8 @@ RUN npm ci --only=production
 COPY . .
 
 # Generate Prisma client
-COPY prisma/schema.prisma ./prisma/
-RUN npx prisma generate
+COPY src/prisma/schema.prisma ./prisma/
+RUN npx prisma generate --schema=./prisma/schema.prisma
 
 # Expose the port the app runs on
 EXPOSE 3100
