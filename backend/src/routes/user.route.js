@@ -1,5 +1,5 @@
 import express from "express"
-import { fetchMany, fetchUsersByRole, login, register } from "../controller/user.controller.js";
+import { fetchUsersByRole, login, register } from "../controller/user.controller.js";
 
 const router = express.Router(); 
 
