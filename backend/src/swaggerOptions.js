@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Mon API",
+      title: "ENCADRINY API",
       version: "1.0.0",
-      description: "Documentation de mon API Express avec Swagger",
+      description: "Documentation de l'API de l'application Encadriny",
     },
     servers: [
       {
