@@ -23,7 +23,7 @@ COPY src/prisma/schema.prisma ./prisma/
 RUN npx prisma generate --schema=./prisma/schema.prisma 
 
 # Ensure migrations are copied
-COPY prisma/migrations ./prisma/migrations
+COPY src/prisma/migrations ./prisma/migrations
 
 
 # Expose the port the app runs on
