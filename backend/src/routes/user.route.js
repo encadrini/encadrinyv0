@@ -1,14 +1,12 @@
 // src/routes/user.route.js
 
-import express from "express";
-import { register, login } from "../controller/user.controller.js";
+import { Router } from "express";
+import { register, login, getAllUsers } from "../controller/user.controller.js";
 
-const router = express.Router();
+const router = Router();
 
-// Route d'inscription utilisateur
 router.post("/register", register);
-
-// Route de connexion utilisateur
 router.post("/login", login);
+router.get("/users", getAllUsers); // 🔥 Ajout de l'endpoint GET
 
 export default router;
