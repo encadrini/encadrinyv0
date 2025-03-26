@@ -7,7 +7,7 @@ const doc = {
     description: "توثيق API بطريقة تلقائية بدون YAML أو تعليقات كثيرة",
     version: "1.0.0",
   },
-  host: "localhost:3000",
+  host: "localhost:3100",
   schemes: ["http"],
   tags: [
     { name: "Users", description: "إدارة المستخدمين" }
