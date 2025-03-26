@@ -1,7 +1,5 @@
 // src/controller/user.controller.js
 
-// src/controller/user.controller.js
-
 import prisma from "../config/prismaConfig.js";
 import bcrypt from "bcrypt";
 
