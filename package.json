@@ -7,7 +7,10 @@
     "start": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node src/prisma/seed.js",
-    "swagger":"node src/config/swagger.js"
+    "swagger":"node src/config/swagger.js",
+    "migrate:dev":"prisma migrate dev  --schema=./src/prisma/schema.prisma",
+    "generate":"prisma generate  --schema=./src/prisma/schema.prisma",
+    "postinstall": "prisma migrate dev  --schema=./src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
