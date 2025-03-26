@@ -19,6 +19,7 @@ RUN npm ci --only=production
 COPY . .
 
 # Generate Prisma client
+COPY prisma/schema.prisma ./prisma/
 RUN npx prisma generate
 
 # Expose the port the app runs on
