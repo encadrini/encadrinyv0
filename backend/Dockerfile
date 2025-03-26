@@ -1,61 +1,62 @@
-# Use an official Node runtime as a parent image
+# Étape de build
 FROM node:18-alpine AS builder
 
-# Set working directory
+# Définition du répertoire de travail
 WORKDIR /app
 
-# Install system dependencies and tools
+# Installation des dépendances système
 RUN apk add --no-cache \
     postgresql-client \
-    git
+    git \
+    tini
 
-# Copy package files first to leverage Docker layer caching
+# Copie des fichiers package.json et package-lock.json pour tirer parti du cache Docker
 COPY package*.json ./
 
-# Install all dependencies (including dev)
+# Installation des dépendances (y compris les dépendances de développement)
 RUN npm ci
 
-# Copy the rest of the application code
+# Copie du reste du code de l’application
 COPY . .
 
-# Generate Prisma client
-RUN npx prisma generate
+# Génération du client Prisma (en précisant le bon chemin)
+RUN npx prisma generate --schema=src/prisma/schema.prisma
 
-# Build the application (if using TypeScript or need to compile)
+# Build de l’application (si TypeScript ou besoin de compilation)
 RUN npm run build
 
-# Production stage
+# Étape de production
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Install only production dependencies
+# Installation des dépendances système nécessaires à l'exécution
 RUN apk add --no-cache \
     postgresql-client \
     tini
 
-# Copy built assets and node_modules from builder
+# Copie uniquement les fichiers nécessaires depuis le builder
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/src/prisma ./src/prisma
 COPY --from=builder /app/package*.json ./
 
-# Ensure Prisma client is generated
-RUN npx prisma generate
+# Assurer que Prisma Client est bien généré
+RUN npx prisma generate --schema=src/prisma/schema.prisma
 
-# Create a non-root user for security
+# Création d’un utilisateur non-root pour des raisons de sécurité
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
 
-# Use Tini as init system
+# Utilisation de Tini comme processus init pour une meilleure gestion des signaux
 ENTRYPOINT ["/sbin/tini", "--"]
 
-# Expose the port the app runs on
+# Exposition du port sur lequel l’application tourne
 EXPOSE 3100
 
-# Health check
+# Vérification de l’état du service
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3100/api/health || exit 1
 
-# Start the application with Prisma migrations
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run start:prod"]
+# Démarrage de l'application avec migration Prisma
+CMD ["sh", "-c", "npx prisma migrate deploy --schema=src/prisma/schema.prisma && npm run start:prod"]
