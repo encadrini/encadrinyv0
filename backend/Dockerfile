@@ -21,6 +21,7 @@ COPY . .
 # Generate Prisma client
 COPY src/prisma/schema.prisma ./prisma/
 RUN npx prisma generate --schema=./prisma/schema.prisma
+RUN npx prisma migrate deploy --schema=./prisma/schema.prisma
 
 # Expose the port the app runs on
 EXPOSE 3100
