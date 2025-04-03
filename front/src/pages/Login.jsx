@@ -12,7 +12,7 @@ export default function Login({ setUser }) {
       console.log(info);
 
       const response = await axios.post(
-        "http://92.222.25.73:3100/user/login",
+        "http://localhost:3100/user/login",
         info
       );
       setUser(response.data);

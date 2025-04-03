@@ -1,17 +1,68 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { AppProvider } from '@toolpad/core/AppProvider';
+import { Account } from '@toolpad/core/Account';
+import CustomMenu from './CustomMenu';
 
-export default function Navbar({ user }) {
+
+
+export default function NavbarR({ user }) {
+  const [session, setSession] = React.useState(demoSession);
+  const authentication = React.useMemo(() => {
+    return {
+      signIn: () => {
+        setSession(demoSession);
+      },
+      signOut: () => {
+        setSession(null);
+      },
+    };
+  }, []);
   return (
-    <div className="d-flex justify-content-between">
-      <img src="/"/>
-      <div className="d-flex">
-        <Link to="projects" >Projects</Link>
-        <Link to="encadrants" >Encadrant</Link>
-      </div>
-      <div>
-        <h6>{user.username}</h6>
-      </div>
-    </div>
+    <Navbar expand="lg" className="bg-body-tertiary">
+    <Container fluid>
+      <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+      <Navbar.Toggle aria-controls="navbarScroll" />
+      <Navbar.Collapse id="navbarScroll">
+        <Nav
+          className="me-auto my-2 my-lg-0"
+          style={{ maxHeight: '100px' }}
+          navbarScroll
+        >
+          <Nav.Link href="#action1">Home</Nav.Link>
+          <Nav.Link href="#action2">Link</Nav.Link>
+          <NavDropdown title="Link" id="navbarScrollingDropdown">
+            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#action4">
+              Another action
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="#action5">
+              Something else here
+            </NavDropdown.Item>
+          </NavDropdown>
+          <Nav.Link href="profile" >
+            Home
+          </Nav.Link>
+        </Nav>
+        <AppProvider authentication={authentication} session={session}>
+      {/* preview-start */}
+      <Account
+        slots={{
+          popoverContent: CustomMenu,
+        }}
+      />
+      {/* preview-end */}
+    </AppProvider>
+
+      </Navbar.Collapse>
+    </Container>
+  </Navbar>
   );
 }
