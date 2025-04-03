@@ -19,7 +19,7 @@ useEffect(()=>{
     <BrowserRouter>
       <Routes>
         {user ? (
-          <Route path="/" element={<Main />}>
+          <Route path="/" element={<Main user={user} />}>
             <Route index element={<Home />} /> 
             <Route path="projects" element={<Projects />} /> 
             <Route path="profile" element={<Profile />} /> 
