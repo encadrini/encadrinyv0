@@ -1,4 +1,29 @@
 {
     "prisma-smart-formatter.typescript.defaultFormatter": "esbenp.prettier-vscode",
-    "prisma-smart-formatter.prisma.defaultFormatter": "Prisma.prisma"
+    "prisma-smart-formatter.prisma.defaultFormatter": "Prisma.prisma",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#fe9266",
+        "activityBar.background": "#fe9266",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#dfffe8",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#15202b99",
+        "editorGroup.border": "#fe9266",
+        "panel.border": "#fe9266",
+        "sash.hoverBorder": "#fe9266",
+        "sideBar.border": "#fe9266",
+        "statusBar.background": "#fe6e33",
+        "statusBar.debuggingBackground": "#33c3fe",
+        "statusBar.debuggingForeground": "#15202b",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#fd4a01",
+        "statusBarItem.remoteBackground": "#fe6e33",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#fe6e33",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#fe6e3399",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#FE6e33"
 }
