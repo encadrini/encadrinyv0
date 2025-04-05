@@ -9,25 +9,27 @@ import Profile from "../pages/Profile";
 import Signup from "../pages/Signup";
 function Router() {
   const [user, setUser] = useState(null);
-useEffect(()=>{
-    var data = localStorage.getItem('user')
-    if(data){
-        setUser(JSON.parse(data))
+
+  useEffect(() => {
+    var data = localStorage.getItem("user");
+    if (data) {
+      setUser(JSON.parse(data));
     }
-},[])
+  }, []);
+  
   return (
     <BrowserRouter>
       <Routes>
         {user ? (
           <Route path="/" element={<Main user={user} />}>
-            <Route index element={<Home />} /> 
-            <Route path="projects" element={<Projects />} /> 
-            <Route path="profile" element={<Profile />} /> 
+            <Route index element={<Home />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         ) : (
           <Route path="/" element={<Auth />}>
-            <Route index element={<Login setUser={setUser} />} /> 
-            <Route path="signup" element={<Signup />} /> 
+            <Route index element={<Login setUser={setUser} />} />
+            <Route path="signup" element={<Signup />} />
           </Route>
         )}
       </Routes>
