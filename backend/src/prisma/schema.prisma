@@ -14,24 +14,74 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  username String
-  email    String    @unique
-  password String
-  role     Role      @default(ETUDIENT)
-  project  Project[]
+  id                    Int                     @id @default(autoincrement())
+  username              String
+  email                 String                  @unique
+  password              String
+  role                  Role                    @default(ETUDIANT)
+  project               Project[]
+  EncadrantTechnologies EncadrantTechnologies[]
+  Collaborators         Collaborators[]
+  Feedbacks             Feedbacks[]
+}
+
+model Collaborators {
+  userId    Int
+  User      User    @relation(fields: [userId], references: [id])
+  projectId String
+  Project   Project @relation(fields: [projectId], references: [id])
+
+  @@unique([userId, projectId])
+}
+
+model Feedbacks {
+  id         String   @id @default(uuid())
+  msg        String
+  createdAt  DateTime @default(now())
+  etudiantId Int
+  Etudiant   User     @relation(fields: [userId], references: [id])
+  projectId  String
+  Project    Project  @relation(fields: [projectId], references: [id])
+  userId     Int
 }
 
 model Project {
-  id          String @id @default(uuid())
-  title       String
-  description String
+  id                  String                @id @default(uuid())
+  title               String
+  description         String
+  Encadrant           User?                  @relation(fields: [encadrantId], references: [id])
+  encadrantId         Int?
+  ProjectTechnologies ProjectTechnologies[]
+  Collaborators       Collaborators[]
+  Feedbacks           Feedbacks[]
+}
 
-  User   User @relation(fields: [userId], references: [id])
-  userId Int
+model EncadrantTechnologies {
+  encadrantId  Int
+  Encadrant    User       @relation(fields: [encadrantId], references: [id])
+  technologyId String
+  Technology   Technology @relation(fields: [technologyId], references: [id])
+
+  @@unique([encadrantId, technologyId])
+}
+
+model ProjectTechnologies {
+  projectId    String
+  Project      Project    @relation(fields: [projectId], references: [id])
+  technologyId String
+  Technology   Technology @relation(fields: [technologyId], references: [id])
+
+  @@unique([projectId, technologyId])
+}
+
+model Technology {
+  id                    String                  @id @default(uuid())
+  title                 String
+  EncadrantTechnologies EncadrantTechnologies[]
+  ProjectTechnologies   ProjectTechnologies[]
 }
 
 enum Role {
   ENCADRANT
-  ETUDIENT
+  ETUDIANT
 }

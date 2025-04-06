@@ -7,9 +7,10 @@ export default function Login({ setUser }) {
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
-  const login = async () => {
+  const login = async (e) => {
+
     try {
-      console.log(info);
+      e.preventDefault()
 
       const response = await axios.post(
         "http://localhost:3100/user/login",
@@ -23,7 +24,11 @@ export default function Login({ setUser }) {
   };
   return (
     <div className="position-fixed h-100 w-100 d-flex justify-content-center align-items-center ">
-      <form className="col-md-4 gap-3 d-flex flex-column border border border-primary rounded p-3 bg-secondary text-white">
+      <form
+        onSubmit={login}
+        className="d-flex flex-column border p-3 gap-3 col-md-6 col-lg-4 col-10 rounded bg-secondary"
+      >
+        <h1 className="text-center">LOGIN</h1>
         <div>
           <label>Email</label>
           <input
@@ -36,7 +41,7 @@ export default function Login({ setUser }) {
           />
         </div>
         <div>
-          <label>Password</label>
+          <label>password</label>
           <input
             className="form-control"
             onChange={handleChange}
@@ -47,11 +52,7 @@ export default function Login({ setUser }) {
           />
         </div>
         <div className="text-center">
-          <button
-            className="btn btn-primary col-3 "
-            type="submit"
-            onSubmit={login}
-          >
+          <button className="btn btn-primary col-6 " onSubmit={login}>
             GO
           </button>
         </div>
